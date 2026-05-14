@@ -11,7 +11,12 @@ load_dotenv()
 app = Flask(__name__)
 
 # Inicializar cliente OpenAI
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+api_key = os.getenv("OPENAI_API_KEY")
+
+if not api_key:
+    raise RuntimeError("Falta OPENAI_API_KEY en las variables de entorno")
+
+client = OpenAI(api_key=api_key)
 
 # Almacenar conversaciones por sesión
 conversations = defaultdict(list)
